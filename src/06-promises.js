@@ -96,22 +96,8 @@ const myPromiseRace = (promises) => {
         }
     })
 }
-console.log(myPromiseRace([p1, p2, p3]));
-// const myPromiseRace = (...promises) => {
-//     return new Promise((resolve, reject) => {
-//         for (let promise of promises) {
-//             promise.then(
-//                 (res) => {
-//                     return resolve(res)
-//                 },
-//                 (err) => {
-//                     return reject(err)
-//                 }
-//             )
-//         }
-//     })
-// }
-// console.log(myPromiseRace(p1, p2, p3));
+myPromiseRace([p1, p2, p3]).then;
+
 //--------------------------------------------
 // const myPromiseAll = (...promises) => {
 //     all = [];
