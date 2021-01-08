@@ -1,0 +1,54 @@
+*{
+    box-sizing: border-box;
+}
+.board{
+    height: 30rem;
+    width: 30rem;
+    margin: 5rem auto;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    background-color: lightgrey;
+}
+.cell{
+    height: 10rem;
+    width: 10rem;
+    border: 0.5px solid black;
+}
+.cellHover{
+    cursor: pointer;
+}
+.empty{
+    width: 50%;
+    margin: 50% auto;
+    border-bottom: 2px solid black;
+}
+.X {
+    height: 50%;
+    width: 50%;  
+    margin: 25% auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.X::before,
+.X::after {
+    content: '';
+    width: 100%;
+    height: 2px; /* cross thickness */
+    background-color: black;
+}
+.X::before {
+    transform: rotate(45deg);
+}
+.X::after {
+    transform: rotate(-45deg);
+}
+.O{
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 50%;
+    height: 50%;
+    margin: 25% auto;
+}
