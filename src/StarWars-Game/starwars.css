@@ -1,0 +1,27 @@
+*{
+    box-sizing: border-box;
+}
+.container{
+width: 80vw;
+height: 80vh;
+border: 1px solid black;
+margin: 5rem auto;
+text-align: center;
+}
+.characterName, .result{
+margin: 1rem auto -1rem;
+font-size: 2rem;
+color: blue;
+height: 20%;
+}
+.movies{
+ height: 60%;
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+flex-direction: column;
+margin: 0 auto;
+}
+.checkbox{
+    text-align: start;
+}

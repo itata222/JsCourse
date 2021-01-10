@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bookTel.css">
+    <title>Book Telephones</title>
+</head>
+<body>
+    <form id="form-container">
+        Search <input type="text" id="search" class="inline-block" />
+        <select id="sort" class="inline-block">
+            <option value="a-z"> a-z </option>
+            <option value="z-a"> z-a </option>
+        </select>
+        <br>
+
+       Name: <input type="text" id="name" class="block" />
+       Phone: <input type="text" id="phone" class=" block"/>
+
+       <input type="submit" id="submitButton" value="submit" class="block"/>
+    </form>
+    <div id="error" class="none">
+        cannot inclludes space!
+    </div>
+    <div id="results">
+
+    </div>
+    <script src="./bookTel.js"></script>
+</body>
+</html>
