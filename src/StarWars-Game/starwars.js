@@ -13,77 +13,90 @@ const submitAnswer = document.getElementById('submitAnswer');
 const characterNameUI = document.getElementById('characterName');
 const allCheckBoxes = document.getElementsByClassName('checkbox');
 const result = document.getElementById('result');
+const nextGame = document.getElementById('next')
+
 let characterName = "";
-let errorDescription = "";
-let characterMovies = [];
-let selectedMovies = [];
-let userRigth = true;
+let charcaterMoviesTitles = [];
+let selectedMovies = new Set();
 
 signSelected = () => {
-    event.target.checked = true;
+    event.target.checked === false ? event.target.checked = false : event.target.checked = true;
 }
-for (let checkbox of allCheckBoxes) {
+for (let checkbox of allCheckBoxes)
     checkbox.addEventListener('click', signSelected)
-}
+
+
 const pushSelectedMovies = () => {
+    selectedMovies.clear();
     for (let el of allCheckBoxes)
         if (el.checked)
-            selectedMovies.push(el.getAttribute('value'))
+            selectedMovies.add(el.getAttribute('value'))
     isUserRight();
 }
 submitAnswer.addEventListener('click', pushSelectedMovies)
-
 const isUserRight = () => {
+    const allSelectedMovies = selectedMovies.values();
+    if (selectedMovies.size === 0)
+        return showResult(false);
     let selectedFR = {};
     let characterFR = {};
-    for (let i = 0; i < selectedMovies.length; i++) {
-        if (characterMovies.length !== selectedMovies.length)
-            userRigth = false;
-        selectedFR[selectedMovies[i]] = true;
-        characterFR[characterMovies[i]] = true;
+    for (let i = 0; i < selectedMovies.size; i++) {
+        if (charcaterMoviesTitles.length !== selectedMovies.size)
+            return showResult(false);
+        selectedFR[allSelectedMovies.next().value] = true;
+        characterFR[charcaterMoviesTitles[i]] = true;
     }
     for (let film in selectedFR) {
-        if (!film in characterFR) userRigth = false;;
+        if (!characterFR[film]) return showResult(false);
     }
-    showResult(userRigth);
+    showResult(true);
 }
 
 const showResult = (userRigth) => {
-    if (userRigth)
-        result.innerHTML = "you rigth !!!"
-    else
-        result.innerHTML = "you are wrong !!!"
+    if (userRigth) {
+        result.innerHTML = "you rigth !!!";
+    }
+    else {
+        result.innerHTML = "you are wrong !!!";
+    }
+    nextGame.className = 'block';
+    nextGame.addEventListener('click', () => {
+        window.location.reload();
+    });
 }
 
-// fetch(`https://swapi.dev/api/people/${characterNumber}/`)
-//     .then((respone) => {
-//         if (respone.ok)
-//             return respone.json();
-//         else
-//             throw new Error('starwars- error 1')
-//     })
-//     .then((responseObject) => {
-//         characterName = responseObject.name;
-//         characterNameUI.innerHTML = `${characterName} played in: `;
-//     })
-//     .catch((error) => {
-//         errorDescription = error;
-//     })
-
-fetch(`https://swapi.dev/api/people/${characterNumber}/films`)
-    .then((response) => {
-        if (response.status === 200)
-            return response.json();
+fetch(`https://swapi.dev/api/people/${characterNumber}/`)
+    .then((respone) => {
+        nextGame.className = 'none';
+        if (respone.ok)
+            return respone.json();
         else
-            throw new Error('starwars- error 2: in getting the characters films')
+            throw new Error('starwars- error 1')
     })
-    .then((responseObj) => {
-        for (let film of responseObj.films)
-            characterMovies.push(film);
+    .then((responseObject) => {
+        characterName = responseObject.name;
+        characterNameUI.innerHTML = `${characterName} played in: `;
+        console.log(characterNumber)
+        for (let film of responseObject.films) {
+            fetch(film)
+                .then((response) => {
+                    if (response.status === 200)
+                        return response.json();
+                    else
+                        throw new Error('starwars- error 2: in getting the characters films')
+                })
+                .then((responseObj) => {
+                    charcaterMoviesTitles.push(responseObj.title);
+                })
+                .catch((err) => {
+                    errorDescription = err;
+                    throw new Error('starwars- error 3')
+                })
+        }
+        console.log(charcaterMoviesTitles)
     })
-    .catch((err) => {
-        errorDescription = err;
-        throw new Error('starwars- error 3')
+    .catch((error) => {
+        errorDescription = error;
     })
 
 
