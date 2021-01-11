@@ -36,6 +36,7 @@ const createNewDiv = (name, phone) => {
     })
     Data.set(name, phone)
     newDiv.appendChild(newDelete)
+    errorWa.className = 'none';
     return newDiv
 }
 const render = () => {

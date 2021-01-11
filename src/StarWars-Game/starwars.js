@@ -78,7 +78,7 @@ fetch(`https://swapi.dev/api/people/${characterNumber}/films`)
             throw new Error('starwars- error 2: in getting the characters films')
     })
     .then((responseObj) => {
-        for (let film of responseObj)
+        for (let film of responseObj.films)
             characterMovies.push(film);
     })
     .catch((err) => {
